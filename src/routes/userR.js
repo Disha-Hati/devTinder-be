@@ -13,7 +13,7 @@ userRouter.get("/user/request/received",userAuth,async(req,res)=>{
     try{
         const loggedInUser=req.user;
 
-        const listOfReq=await connectionReq.find({status:"interested",toUserId:loggedInUser._id}).populate("fromUserId",["firstName","lastName","photo"]);
+        const listOfReq=await connectionReq.find({status:"interested",toUserId:loggedInUser._id}).populate("fromUserId",["firstName","lastName","photo","about"]);
 
         res.json({
             message:"Pending Connection Requests are fetched successfully!! Total No of Pending Connection Requests: "+listOfReq.length,
@@ -36,8 +36,8 @@ userRouter.get("/user/connections",userAuth, async(req,res)=>{
                 {fromUserId:loggedInUser._id,status:"accepted"}
             ]
         })
-        .populate("fromUserId",["firstName","lastName","gender","age","photo"])
-        .populate("toUserId",["firstName","lastName","gender","age","photo"])
+        .populate("fromUserId",["firstName","lastName","gender","age","photo","about"])
+        .populate("toUserId",["firstName","lastName","gender","age","photo","about"])
 
         const data=connections.map((key)=>{
             if(key.fromUserId._id.toString()===loggedInUser._id.toString()){
@@ -87,11 +87,9 @@ userRouter.get("/user/feed",userAuth,async(req,res)=>{
 
         const feed = await User.find({
             _id: { $nin: Array.from(excludeUserIds) }, // Convert Set to Array
-          }).select("firstName lastName gender age about skills").skip(skip).limit(limit);
+          }).select("firstName lastName gender age about skills photo").skip(skip).limit(limit);
 
-        res.json({message:"Your message data is fetched successfully!!",
-            data:feed,
-        })
+        res.json(feed)
     }catch(err){
         res.status(400).send("Some error Occurred!! "+err.message);
     }

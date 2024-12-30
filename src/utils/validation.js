@@ -18,7 +18,7 @@ const validateSignUp=(req)=>{
 
 const validateEditProfile=(req)=>{
     const updates=req.body;
-    const ALLOWED_FIELDS=["age","photo","about","skills"];
+    const ALLOWED_FIELDS=["firstName","lastName","age","photo","about","skills","gender"];
 
     const invalidFields=Object.keys(updates).filter((f)=>!ALLOWED_FIELDS.includes(f));
 

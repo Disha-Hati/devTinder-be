@@ -10,7 +10,7 @@ app.use(cors(
     {
     origin: "http://localhost:5173", // Set the correct origin
     credentials: true, // Allow credentials
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow required HTTP methods
+    methods: ['GET', 'POST', 'OPTIONS', 'PATCH' ], // Allow required HTTP methods
     }
 )); //middleware for cors
 
