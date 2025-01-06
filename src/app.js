@@ -3,6 +3,7 @@ const express=require("express");
 const app=express();
 const cookieParser=require("cookie-parser");
 const cors=require("cors");
+require('dotenv').config()
 
 const connectDB=require("./config/database");
 
@@ -30,7 +31,7 @@ app.use("/",userRouter);
  
 connectDB().then(()=>{
     console.log("DB connected successfully");
-    app.listen(3000,()=>{
+    app.listen(process.env.PORT,()=>{
         console.log("We're finally doing it!!");
     })
 })
